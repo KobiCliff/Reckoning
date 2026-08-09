@@ -41,6 +41,10 @@ const goalsRoutes = require("./routes/goals");
 server.use("/goals", goalsRoutes);
 const reportsRoutes = require("./routes/reports");
 server.use("/reports", reportsRoutes);
+const walletRoutes = require("./routes/wallet");
+server.use("/wallet", walletRoutes);
+const chargeRoutes = require("./routes/charges");
+server.use("/charges", chargeRoutes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
