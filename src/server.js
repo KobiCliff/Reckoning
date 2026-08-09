@@ -1,12 +1,13 @@
 const express = require("express");
-const {Pool} = require("pg");
+const {createClient} = require("@supabase/supabase-js");
 require("dotenv").config();
 const cors = require("cors");
 
 const server = express();
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
+const supabase = createClient(
+    process.env.SUPABASE_URL, 
+    process.env.SUPABASE_ANON_KEY
+);
 
 // Middleware   
 server.use(cors());
@@ -20,13 +21,22 @@ server.get("/health", (req, res) => {
 // Test route to check database connection
 server.get("/db-health", async (req, res) => {
   try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({ status: "Database connection successful", time: result.rows[0] });
+    const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .limit(1); // Just to check if we can fetch data
+
+    if (error) throw error;
+
+    res.json({ status: "Database connection is healthy"});
   } catch (error) {
     console.error("Database connection error:", error);
     res.status(500).json({ error: error.message });
   }
 });
+
+const authRoutes = require("./routes/auth");
+server.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
