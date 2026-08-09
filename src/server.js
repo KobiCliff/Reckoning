@@ -45,6 +45,8 @@ const walletRoutes = require("./routes/wallet");
 server.use("/wallet", walletRoutes);
 const chargeRoutes = require("./routes/charges");
 server.use("/charges", chargeRoutes);
+const { startChargeJob } = require("./jobs/chargeJob");
+startChargeJob();
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
