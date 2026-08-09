@@ -37,6 +37,10 @@ server.get("/db-health", async (req, res) => {
 
 const authRoutes = require("./routes/auth");
 server.use("/auth", authRoutes);
+const goalsRoutes = require("./routes/goals");
+server.use("/goals", goalsRoutes);
+const reportsRoutes = require("./routes/reports");
+server.use("/reports", reportsRoutes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
