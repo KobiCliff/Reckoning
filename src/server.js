@@ -45,10 +45,10 @@ const walletRoutes = require("./routes/wallet");
 server.use("/wallet", walletRoutes);
 const chargeRoutes = require("./routes/charges");
 server.use("/charges", chargeRoutes);
-const { startChargeJob } = require("./jobs/chargeJob");
-startChargeJob();
+// const { startChargeJob } = require("./jobs/chargeJob");
+// startChargeJob();
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
